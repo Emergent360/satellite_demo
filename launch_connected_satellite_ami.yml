@@ -5,7 +5,7 @@
   gather_facts: no
     
   roles:
-  - launch_ami
+  - launch_ec2_instance
 
   tasks:
   - name: "Wait for connection on all hosts."
