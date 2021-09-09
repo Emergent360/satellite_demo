@@ -10,9 +10,9 @@
   tasks:
   - name: "Wait for connection on all hosts."
     wait_for:
-      host: "{{ item['instances'][0]['private_ip'] }}"
+      host: "{{ item['instances'][0]['private_ip_address'] }}"
       port: 22
       timeout: 500
     loop: "{{ ec2.results }}"
     loop_control:
-      label: "{{ item['instances'][0]['private_ip'] }}"
+      label: "{{ item['instances'][0]['private_ip_address'] }}"
