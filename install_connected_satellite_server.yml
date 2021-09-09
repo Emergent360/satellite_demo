@@ -1,0 +1,10 @@
+---
+
+- name: "Install connected satellite server"
+  hosts: all
+  gather_facts: no
+    
+  tasks:
+  - name: manage subscription
+    import_role:
+      name: register_rhel_subscription
