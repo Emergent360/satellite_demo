@@ -70,3 +70,8 @@
       --enable=rhel-server-rhscl-7-rpms \
       --enable=rhel-7-server-ansible-2.9-rpms
   
+  - name: install satellite rpm
+    yum:
+      name: satellite
+      state: present
+    become: yes
