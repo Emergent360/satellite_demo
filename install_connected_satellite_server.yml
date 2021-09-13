@@ -8,10 +8,12 @@
   - name: remove amazon rhui client
     command: yum -y remove rh-amazon-rhui-client*
     become: yes
+    warn: false
 
   - name: clear repo config
     command: rm -rf /etc/yum.repos.d/*
     become: yes
+    warn: false
 
   - name: Register RHEL instance subscription
     redhat_subscription:
@@ -44,6 +46,7 @@
       update_cache: yes
       name: "*"
       state: latest
+    become: yes
 
   - name: Check for reboot needed
     command: /usr/bin/needs-restarting -r
@@ -55,3 +58,4 @@
   - name: Reboot if necessary
     reboot:
     when: needs_reboot.rc == 1
+    become: yes
