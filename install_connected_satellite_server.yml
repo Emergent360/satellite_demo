@@ -7,13 +7,13 @@
   tasks:
   - name: remove amazon rhui client
     command: yum -y remove rh-amazon-rhui-client*
+      warn: false
     become: yes
-    warn: false
 
   - name: clear repo config
     command: rm -rf /etc/yum.repos.d/*
+      warn: false
     become: yes
-    warn: false
 
   - name: Register RHEL instance subscription
     redhat_subscription:
