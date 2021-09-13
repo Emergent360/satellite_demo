@@ -11,6 +11,7 @@
 
   - name: update and reboot
     yum:
+      update_cache: yes
       name: "*"
       state: latest
 
