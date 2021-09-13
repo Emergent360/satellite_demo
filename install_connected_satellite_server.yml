@@ -8,7 +8,7 @@
   - name: remove amazon rhui client
     command: yum -y remove rh-amazon-rhui-client*
     become: yes
-    
+
   - name: clear repo config
     command: rm -rf /etc/yum.repos.d/*
     become: yes
@@ -18,7 +18,6 @@
       state: present
       activationkey: "{{ rh_activationkey }}"
       org_id: "{{ rh_org_id }}"
-      release: "{{ rh_release }}"
       auto_attach: true
       pool_ids: "{{ pool_ids | default(omit) }}"
     become: yes
