@@ -86,4 +86,7 @@
       --foreman-proxy-tftp true \
       --enable-foreman-plugin-discovery
     become: yes
-    
+
+  - name: print url for console
+    debug:
+      msg: "Access satellite console at https://{{ ec2_public_dns_name }}"
