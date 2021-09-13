@@ -8,3 +8,19 @@
   - name: manage subscription
     import_role:
       name: register_rhel_subscription
+
+  - name: update and reboot
+    dnf:
+      name: "*"
+      state: latest
+
+  - name: Check for reboot needed
+    command: /usr/bin/needs-restarting -r
+    register: needs_reboot
+    ignore_errors: yes
+    failed_when: needs_reboot.rc >= 2
+    changed_when: needs_reboot.rc == 1
+
+  - name: Reboot if necessary
+    reboot:
+    when: needs_reboot.rc == 1
