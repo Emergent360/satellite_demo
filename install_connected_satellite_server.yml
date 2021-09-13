@@ -14,6 +14,29 @@
     command: rm -rf /etc/yum.repos.d/*
     become: yes
 
+  - name: Register RHEL instance subscription
+    redhat_subscription:
+      state: present
+      activationkey: "{{ rh_activationkey }}"
+      org_id: "{{ rh_org_id }}"
+      release: "{{ rh_release }}"
+      auto_attach: true
+      pool_ids: "{{ pool_ids | default(omit) }}"
+    become: yes
+    register: reg_sub
+    until: reg_sub is not failed
+    retries: 5
+
+  - name: Update stage tag to registered
+    ec2_tag:
+      region: "{{ ec2_region }}"
+      resource: "{{ hostvars[inventory_hostname]['ec2_id'] }}"
+      state: present
+      tags:
+        Stage: "registered"
+    delegate_to: localhost
+    when: reg_sub is not failed
+
 #  - name: manage subscription
 #    import_role:
 #      name: register_rhel_subscription
