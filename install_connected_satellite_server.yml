@@ -5,9 +5,18 @@
   gather_facts: no
     
   tasks:
-  - name: manage subscription
-    import_role:
-      name: register_rhel_subscription
+  - name: remove amazon rhui client
+    yum:
+      name: "rh-amazon-rhui-client*"
+      state: absent
+
+  - name: clear repo config
+    command: rm -rf /etc/yum.repos.d/*
+    become: yes
+
+#  - name: manage subscription
+#    import_role:
+#      name: register_rhel_subscription
 
   - name: update and reboot
     yum:
