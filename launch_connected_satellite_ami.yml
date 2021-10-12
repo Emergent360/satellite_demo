@@ -3,6 +3,9 @@
 - name: "Launch connected satellite AMI"
   hosts: localhost
   gather_facts: no
+  vars:
+    vol_device_name: "/dev/sda1"
+    ebs_volume_size: "400"
     
   roles:
   - launch_ec2_instance
