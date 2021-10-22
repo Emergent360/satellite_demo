@@ -17,6 +17,12 @@
       warn: false
     become: yes
 
+  - name: copy product-id.conf
+    file:
+      src: product-id.conf
+      dest: /etc/yum/pluginconf.d/product-id.conf
+    become: yes
+    
   - name: Register RHEL instance subscription
     redhat_subscription:
       state: present
