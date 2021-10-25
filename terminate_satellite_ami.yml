@@ -1,6 +1,6 @@
 ---
 
-- name: "Terminate connected satellite AMIs"
+- name: "Terminate satellite AMIs"
   hosts: localhost
   gather_facts: no
 
