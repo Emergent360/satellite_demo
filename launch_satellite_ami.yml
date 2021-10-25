@@ -1,6 +1,6 @@
 ---
 
-- name: "Launch connected satellite AMI"
+- name: "Launch satellite AMI"
   hosts: localhost
   gather_facts: no
   vars:
