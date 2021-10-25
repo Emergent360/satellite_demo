@@ -1,0 +1,8 @@
+---
+
+- name: "Deregister satellite subscription"
+  hosts: all
+  gather_facts: no
+
+  roles:
+  - deregister_rhel_subscription
