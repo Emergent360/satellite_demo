@@ -12,3 +12,10 @@
         "tag:Name": satellite-media
     register: vol_info
 
+  - name: get instance info
+    ec2_instance_info:
+      region: "{{ ec2_region }}"
+      filters:
+      "tag:Name": Satellite Server
+    register: instance_info
+
