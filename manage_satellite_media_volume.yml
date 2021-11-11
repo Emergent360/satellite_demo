@@ -12,24 +12,16 @@
         "tag:Name": satellite-media
     register: vol
 
-  - name: get public instance info
+  - name: get instance info
     ec2_instance_info:
       region: "{{ ec2_region }}"
       filters:
         "tag:Name": "*Satellite Server*"
-        "tag:Tier": "Public"
-    register: public_instance
+        "tag:Tier": "{{ tier }}"
+    register: instance
 
-  - name: get private instance info
-    ec2_instance_info:
-      region: "{{ ec2_region }}"
-      filters:
-        "tag:Name": "*Satellite Server*"
-        "tag:Tier": "Private"
-    register: private_instance
-
-  - name: attach volume to public instance
+  - name: attach volume to instance
     amazon.aws.ec2_vol:
       region: "{{ ec2_region }}"
-      instance: "{{ public_instance.instances[0].instance_id }}"
+      instance: "{{ instance.instances[0].instance_id }}"
       id: "{{ vol.volumes[0].id }}"
