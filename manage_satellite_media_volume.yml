@@ -38,7 +38,7 @@
 
   - name: mount device to mount point
     become: yes
-    amazon.posix.mount:
+    ansible....posix.mount:
       path: /data
       src: /dev/nvme1n1
       state: present
