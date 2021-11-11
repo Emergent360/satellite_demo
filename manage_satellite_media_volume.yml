@@ -17,5 +17,6 @@
       region: "{{ ec2_region }}"
       filters:
         "tag:Name": "*Satellite Server*"
+        "tag:Tier": "Public"
     register: instance_info
 
