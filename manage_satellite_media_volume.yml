@@ -40,6 +40,12 @@
     become: yes
     ansible.posix.mount:
       path: /data
+      state: unmounted
+
+  - name: mount device to mount point
+    become: yes
+    ansible.posix.mount:
+      path: /data
       src: /dev/nvme1n1
       state: mounted
       fstype: xfs
