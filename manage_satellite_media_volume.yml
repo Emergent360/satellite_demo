@@ -12,6 +12,12 @@
         "tag:Name": satellite-media
     register: vol
 
+  - name: detach volume
+    amazon.aws.ec2_vol:
+      region: "{{ ec2_region }}"
+      instance: None
+      id: "{{ vol.volumes[0].id }}"
+
   - name: get instance info
     ec2_instance_info:
       region: "{{ ec2_region }}"
