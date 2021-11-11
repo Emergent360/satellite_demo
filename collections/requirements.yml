@@ -1,0 +1,4 @@
+collections:
+  - name: cisco.asa
+  - name: amazon.aws
+  - name: ansible.netcommon
