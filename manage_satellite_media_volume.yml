@@ -1,10 +1,12 @@
 - name: "Manage satellite media volume"
   hosts: all
   gather_facts: no
-    
+  vars:
+    region: us-east-1
+      
   tasks:
   - name: get volume info
-    ec2_vol_info:
+    amazon.aws.ec2_vol_info:
       filters:
         "tag:Name": satellite-media
     register: vol_info
