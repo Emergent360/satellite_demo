@@ -1,0 +1,98 @@
+---
+
+- name: "Install disconnected satellite server"
+  hosts: all
+  gather_facts: no
+    
+  tasks:
+  - name: remove amazon rhui client
+    command: yum -y remove rh-amazon-rhui-client*
+    args:
+      warn: false
+    become: yes
+
+  - name: clear repo config
+    command: rm -rf /etc/yum.repos.d/*
+    args:
+      warn: false
+    become: yes
+
+  - name: copy product-id.conf
+    file:
+      src: product-id.conf
+      dest: /etc/yum/pluginconf.d/product-id.conf
+    become: yes
+    
+  - name: Register RHEL instance subscription
+    redhat_subscription:
+      state: present
+      activationkey: "{{ rh_activationkey }}"
+      org_id: "{{ rh_org_id }}"
+      auto_attach: true
+      pool_ids: "{{ pool_ids | default(omit) }}"
+    become: yes
+    register: reg_sub
+    until: reg_sub is not failed
+    retries: 5
+
+  - name: Update stage tag to registered
+    ec2_tag:
+      region: "{{ ec2_region }}"
+      resource: "{{ hostvars[inventory_hostname]['ec2_id'] }}"
+      state: present
+      tags:
+        Stage: "registered"
+    delegate_to: localhost
+    when: reg_sub is not failed
+
+#  - name: manage subscription
+#    import_role:
+#      name: register_rhel_subscription
+
+  - name: update and reboot
+    yum:
+      update_cache: yes
+      name: "*"
+      state: latest
+    become: yes
+
+  - name: Check for reboot needed
+    command: /usr/bin/needs-restarting -r
+    register: needs_reboot
+    ignore_errors: yes
+    failed_when: needs_reboot.rc >= 2
+    changed_when: needs_reboot.rc == 1
+
+  - name: Reboot if necessary
+    reboot:
+    when: needs_reboot.rc == 1
+    become: yes
+
+  - name: set repolist
+    command: subscription-manager repos \
+      --enable=rhel-7-server-rpms \
+      --enable=rhel-7-server-satellite-6.9-rpms \
+      --enable=rhel-7-server-satellite-maintenance-6-rpms \
+      --enable=rhel-server-rhscl-7-rpms \
+      --enable=rhel-7-server-ansible-2.9-rpms
+    become: yes
+
+  - name: install satellite rpm
+    yum:
+      name: satellite
+      state: present
+    become: yes
+
+  - name: run satellite installer
+    command: satellite-installer \
+      --scenario satellite \
+      --foreman-initial-admin-username "{{ local_account_username }}" \
+      --foreman-initial-admin-password "{{ local_account_password }}" \
+      --foreman-proxy-puppetca true \
+      --foreman-proxy-tftp true \
+      --enable-foreman-plugin-discovery
+    become: yes
+
+  - name: print url for console
+    debug:
+      msg: "Access satellite console at https://{{ ec2_public_dns_name }}"
