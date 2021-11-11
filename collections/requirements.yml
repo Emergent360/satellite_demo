@@ -1,3 +1,3 @@
 collections:
-  - name: amazon.posix
+  - name: ansible.posix
   - name: amazon.aws
