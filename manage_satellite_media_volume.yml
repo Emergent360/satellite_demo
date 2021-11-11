@@ -11,12 +11,14 @@
       filters:
         "tag:Name": satellite-media
     register: vol
+    delegate_to: localhost
 
   - name: detach volume
     amazon.aws.ec2_vol:
       region: "{{ ec2_region }}"
       instance: None
       id: "{{ vol.volumes[0].id }}"
+    delegate_to: localhost
 
   - name: get instance info
     ec2_instance_info:
@@ -25,9 +27,11 @@
         "tag:Name": "*Satellite Server*"
         "tag:Tier": "{{ tier }}"
     register: instance
+    delegate_to: localhost
 
   - name: attach volume to instance
     amazon.aws.ec2_vol:
       region: "{{ ec2_region }}"
       instance: "{{ instance.instances[0].instance_id }}"
       id: "{{ vol.volumes[0].id }}"
+    delegate_to: localhost
