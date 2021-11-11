@@ -35,3 +35,10 @@
       instance: "{{ instance.instances[0].instance_id }}"
       id: "{{ vol.volumes[0].id }}"
     delegate_to: localhost
+
+  - name: mount device to mount point
+    become: yes
+    amazon.posix.mount:
+      path: /data
+      src: /dev/nvme1n1
+      state: present
