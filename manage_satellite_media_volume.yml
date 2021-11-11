@@ -12,11 +12,19 @@
         "tag:Name": satellite-media
     register: vol_info
 
-  - name: get instance info
+  - name: get public instance info
     ec2_instance_info:
       region: "{{ ec2_region }}"
       filters:
         "tag:Name": "*Satellite Server*"
         "tag:Tier": "Public"
-    register: instance_info
+    register: public instance_info
+
+  - name: get private instance info
+    ec2_instance_info:
+      region: "{{ ec2_region }}"
+      filters:
+        "tag:Name": "*Satellite Server*"
+        "tag:Tier": "Private"
+    register: private_instance_info
 
