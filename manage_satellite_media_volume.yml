@@ -42,3 +42,4 @@
       path: /data
       src: /dev/nvme1n1
       state: present
+      fstype: xfs
