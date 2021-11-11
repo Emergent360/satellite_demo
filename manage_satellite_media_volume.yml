@@ -41,5 +41,5 @@
     ansible.posix.mount:
       path: /data
       src: /dev/nvme1n1
-      state: present
+      state: mounted
       fstype: xfs
