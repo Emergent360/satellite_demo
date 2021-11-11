@@ -1,5 +1,5 @@
 - name: "Manage satellite media volume"
-  hosts: all
+  hosts: "tag_Tier_{{ tier }}"
   gather_facts: no
   vars:
     ec2_region: us-east-1
