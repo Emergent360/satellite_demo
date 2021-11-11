@@ -16,6 +16,6 @@
     ec2_instance_info:
       region: "{{ ec2_region }}"
       filters:
-      "tag:Name": Satellite Server
+        "tag:Name": Satellite Server
     register: instance_info
 
