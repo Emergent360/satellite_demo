@@ -30,5 +30,6 @@
 
   - name: attach volume to public instance
     amazon.aws.ec2_vol:
+      region: "{{ ec2_region }}"
       instance: "{{ public_instance.instances[0].instance_id }}"
       id: "{{ vol.volumes[0].id }}"
