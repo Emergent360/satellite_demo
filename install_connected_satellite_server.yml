@@ -18,7 +18,7 @@
     become: yes
 
   - name: copy product-id.conf
-    file:
+    copy:
       src: product-id.conf
       dest: /etc/yum/pluginconf.d/product-id.conf
     become: yes
