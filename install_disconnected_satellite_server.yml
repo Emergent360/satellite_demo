@@ -93,3 +93,6 @@
       cmd: /media/sat6/install_packages
       chdir: /media/sat6
 
+  - name: run satellite installer
+    command: satellite-installer \
+      --scenario satellite \
