@@ -3,8 +3,6 @@
 - name: "show satellite settings"
   hosts: localhost
   gather_facts: no
-  collections:
-  - redhat.satellite
 
   tasks:
   - name: "show settings"
