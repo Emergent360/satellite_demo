@@ -73,9 +73,19 @@
     reboot:
     when: needs_reboot.rc == 1
 
-  - name: install dep packages
+  - name: Find all rpm files in deps folder
+    find:
+      paths: "/data/deps"
+      patterns: "*.rpm"
+    register: rpm_files
+  
+  - name: Setting rpm_list
+    set_fact:
+      rpm_list: "{{ rpm_files.files | map(attribute='path') | list}}"
+
+  - name: installing the rpm files
     yum:
-      name: /data/selinux-policy-targeted-3.13.1-268.el7_9.2.noarch.rpm
+      name: "{{rpm_list}}"
       state: present
 
   - name: install satellite packages
