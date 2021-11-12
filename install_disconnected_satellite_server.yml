@@ -12,8 +12,9 @@
       state: absent
 
   - name: clear repo config
-    file: /etc/yum.repos.d/*
-    state: absent
+    file: 
+      name: /etc/yum.repos.d/*
+      state: absent
 
   - name: copy product-id.conf
     copy:
