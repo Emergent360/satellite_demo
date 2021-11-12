@@ -7,14 +7,13 @@
 
   tasks:
   - name: remove amazon rhui client
-    command: yum -y remove rh-amazon-rhui-client*
-    args:
-#      warn: false
+    yum:
+      name: rh-amazon-rhui-client*
+      state: absent
 
   - name: clear repo config
-    command: rm -rf /etc/yum.repos.d/*
-    args:
-#      warn: false
+    file: /etc/yum.repos.d/*
+    state: absent
 
   - name: copy product-id.conf
     copy:
