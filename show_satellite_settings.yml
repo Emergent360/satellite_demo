@@ -1,0 +1,13 @@
+---
+
+- name: "show satellite settings"
+  hosts: localhost
+  gather_facts: no
+  vars:
+
+  tasks:
+  - name: "show settings"
+    redhat.satellite.setting_info:
+      username: "admin"
+      password: "uNmWernSpF666Cd7"
+      server_url: "https://ip-10-5-3-34.ec2.internal"
