@@ -44,3 +44,9 @@
       fstype: iso9660
       opts: loop
       state: mounted
+
+  - name: copy media.repo
+    copy:
+      src: /media/rhel7-server/media.repo
+      dest: /etc/yum.repos.d/rhel7-server.repo
+      remote_src: yes
