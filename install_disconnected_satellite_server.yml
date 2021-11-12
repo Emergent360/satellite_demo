@@ -73,3 +73,8 @@
     reboot:
     when: needs_reboot.rc == 1
 
+  - name: install satellite packages
+    command:
+      cmd: /media/sat6/install_packages
+      chdir: /media/sat6
+
