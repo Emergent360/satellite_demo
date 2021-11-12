@@ -4,6 +4,8 @@
   hosts: localhost
   gather_facts: no
   vars:
+  collections:
+    - redhat.satellite
 
   tasks:
   - name: "show settings"
