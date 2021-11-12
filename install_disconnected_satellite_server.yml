@@ -35,7 +35,7 @@
       src: /data/rhel-server-7.9-x86_64-dvd.iso
       fstype: iso9660
       opts: loop
-      state: present
+      state: mounted
 
   - name: mount satellite iso
     ansible.posix.mount:
@@ -43,4 +43,4 @@
       src: /data/satellite-6.9.6.1-rhel-7-x86_64-dvd.iso
       fstype: iso9660
       opts: loop
-      state: present
+      state: mounted
