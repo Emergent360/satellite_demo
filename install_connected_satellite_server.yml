@@ -29,7 +29,7 @@
       activationkey: "{{ rh_activationkey }}"
       org_id: "{{ rh_org_id }}"
       auto_attach: true
-      pool: "Red Hat Satellite Infrastructure Subscription"
+      pool_ids: "{{ pool_ids | default(omit) }}
     become: yes
     register: reg_sub
     until: reg_sub is not failed
@@ -44,16 +44,6 @@
         Stage: "registered"
     delegate_to: localhost
     when: reg_sub is not failed
-
-  - name: Enable repos
-    community.general.rhsm_repository:
-      name: "{{ item }}"
-    loop:
-      - rhel-7-server-rpms
-      - rhel-7-server-satellite-6.9-rpms
-      - rhel-7-server-satellite-maintenance-6-rpms
-      - rhel-server-rhscl-7-rpms
-      - rhel-7-server-ansible-2.9-rpms
 
   - name: update and reboot
     yum:
