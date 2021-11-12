@@ -55,3 +55,21 @@
     lineinfile:
       path: /etc/yum.repos.d/rhel7-server.repo
       line: 'baseurl=file:///media/rhel7-server/'
+
+  - name: update and reboot
+    yum:
+      update_cache: yes
+      name: "*"
+      state: latest
+
+  - name: Check for reboot needed
+    command: /usr/bin/needs-restarting -r
+    register: needs_reboot
+    ignore_errors: yes
+    failed_when: needs_reboot.rc >= 2
+    changed_when: needs_reboot.rc == 1
+
+  - name: Reboot if necessary
+    reboot:
+    when: needs_reboot.rc == 1
+
