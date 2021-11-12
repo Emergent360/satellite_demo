@@ -31,3 +31,19 @@
       - /media/rhel7-server
       - /media/sat6
     become: yes
+
+  - name: mount rhel server iso
+    ansible.posix.mount:
+      path: /media/rhel7-server
+      src: /data/rhel-server-7.9-x86_64-dvd.iso
+      fstype: iso9660
+      opts: loop
+      state: present
+
+  - name: mount satellite iso
+    ansible.posix.mount:
+      path: /media/sat6
+      src: /data/satellite-6.9.6.1-rhel-7-x86_64-dvd.iso
+      fstype: iso9660
+      opts: loop
+      state: present
