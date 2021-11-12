@@ -96,3 +96,8 @@
   - name: run satellite installer
     command: satellite-installer \
       --scenario satellite \
+
+  - name: configure disconnected mode
+    command: hammer settings set \
+      --name content_disconnected \
+      --value true
