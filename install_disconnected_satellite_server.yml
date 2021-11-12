@@ -9,12 +9,12 @@
   - name: remove amazon rhui client
     command: yum -y remove rh-amazon-rhui-client*
     args:
-      warn: false
+#      warn: false
 
   - name: clear repo config
     command: rm -rf /etc/yum.repos.d/*
     args:
-      warn: false
+#      warn: false
 
   - name: copy product-id.conf
     copy:
@@ -50,3 +50,8 @@
       src: /media/rhel7-server/media.repo
       dest: /etc/yum.repos.d/rhel7-server.repo
       remote_src: yes
+
+  - name: add baseurl to repo
+    lineinfile:
+      path: /etc/yum.repos.d/rhel7-server.repo
+      line: 'baseurl=file:///media/rhel7-server/'
