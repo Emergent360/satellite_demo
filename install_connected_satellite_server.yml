@@ -45,9 +45,15 @@
     delegate_to: localhost
     when: reg_sub is not failed
 
-#  - name: manage subscription
-#    import_role:
-#      name: register_rhel_subscription
+  - name: Enable repos
+    community.general.rhsm_repository:
+      name: "{{ item }}"
+    loop:
+      - rhel-7-server-rpms
+      - rhel-7-server-satellite-6.9-rpms
+      - rhel-7-server-satellite-maintenance-6-rpms
+      - rhel-server-rhscl-7-rpms
+      - rhel-7-server-ansible-2.9-rpms
 
   - name: update and reboot
     yum:
