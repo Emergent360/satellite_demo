@@ -73,6 +73,11 @@
     reboot:
     when: needs_reboot.rc == 1
 
+  - name: install dep packages
+    yum:
+      name: /data/selinux-policy-targeted-3.13.1-268.el7_9.2.noarch.rpm
+      state: present
+
   - name: install satellite packages
     command:
       cmd: /media/sat6/install_packages
