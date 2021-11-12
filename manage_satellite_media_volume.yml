@@ -1,16 +1,24 @@
-- name: "Manage satellite media volume"
+- name: "Unmount satellite media volume"
+  hosts: all
+  gather_facts: no
+  vars:
+    ec2_region: us-east-1
+
+  tasks:
+  - name: unmount device from mount point
+    become: yes
+    ansible.posix.mount:
+      path: /data
+      state: unmounted
+
+
+- name: "Mount satellite media volume"
   hosts: "tag_Tier_{{ tier }}"
   gather_facts: no
   vars:
     ec2_region: us-east-1
 
   tasks:
-  - name: mount device to mount point
-    become: yes
-    ansible.posix.mount:
-      path: /data
-      state: unmounted
-
   - name: get volume info
     amazon.aws.ec2_vol_info:
       region: "{{ ec2_region }}"
