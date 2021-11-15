@@ -96,6 +96,11 @@
   - name: run satellite installer
     command: satellite-installer \
       --scenario satellite \
+      --foreman-initial-admin-username "{{ local_account_username }}" \
+      --foreman-initial-admin-password "{{ local_account_password }}" \
+      --foreman-proxy-puppetca true \
+      --foreman-proxy-tftp true \
+      --enable-foreman-plugin-discovery
 
   - name: configure disconnected mode
     command: hammer settings set \
