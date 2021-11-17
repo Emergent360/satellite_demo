@@ -106,3 +106,7 @@
     command: hammer settings set \
       --name content_disconnected \
       --value true
+
+  - name: print url for console
+    debug:
+      msg: "Access satellite console at https://{{ ec2_private_dns_name }} using ssh tunnel"
