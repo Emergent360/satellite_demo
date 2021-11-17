@@ -5,11 +5,10 @@
   gather_facts: no
 
   tasks:
-  - name: "show settings"
-    ansible.builtin.stat:
-      path: /data/manifest_connected_satellite_demo_20211117T143322Z.zip
-    register: data
+  - name: "Show a setting"
+    redhat.satellite.setting_info:
+      username: "admin"
+      password: "changeme"
+      server_url: "https://satellite.example.com"
+      name: "http_proxy"
 
-  - name: print debug
-    ansible.builtin.debug:
-      var: data
