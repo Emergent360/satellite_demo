@@ -5,11 +5,11 @@
   gather_facts: no
   vars:
     manifest_connected_satellite_demo: "manifest_connected_satellite_demo_20211117T143322Z.zip"
-    
+
   tasks:
   - name: "checking for manifest file on /data (satellite media volume)"
     ansible.builtin.stat:
-      path: /data/"{{ manifest_connected_satellite_demo }}"
+      path: "/data/{{ manifest_connected_satellite_demo }}"
     register: data
 
   - name: "importing manifest file"
