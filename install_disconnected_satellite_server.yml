@@ -107,6 +107,19 @@
       --name content_disconnected \
       --value true
 
+  - name: "checking for manifest file on /data (satellite media volume)"
+    ansible.builtin.stat:
+      path: "/data/{{ manifest_connected_satellite_demo }}"
+    register: data
+
+  - name: "importing manifest file"
+    ansible.builtin.command: >
+      hammer subscription upload
+      --file /data/"{{ manifest_connected_satellite_demo }}"
+      --organization "Emergent"
+    when: data.stat.exists
+    become: yes
+
   - name: print url for console
     debug:
       msg: "Access satellite console at https://{{ ec2_private_dns_name }} using ssh tunnel"
