@@ -1,10 +1,15 @@
 ---
 
 - name: "show satellite settings"
-  hosts: localhost
+  hosts: all
   gather_facts: no
 
   tasks:
   - name: "show settings"
-    debug:
-      msg: "{{ lookup( 'env' ) }}"
+    ansible.builtin.stat:
+      path: /data
+    register: data
+
+  - name: print debug
+    ansible.builtin.debug:
+      var: data
