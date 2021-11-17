@@ -14,8 +14,10 @@
 
   - name: "importing manifest file"
     ansible.builtin.command:
-      cmd: hammer subscription upload \
+      command: >
+        hammer subscription upload
         --file /data/"{{ manifest_connected_satellite_demo }}"
         --organization "Emergent"
     when: data.stat.exists
+    become: yes
 
