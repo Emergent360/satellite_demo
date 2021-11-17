@@ -82,11 +82,13 @@
   - name: run satellite installer
     command: satellite-installer \
       --scenario satellite \
+      --foreman-initial-organization "Emergent" \
+      --foreman-initial-location "Virginia Beach" \
       --foreman-initial-admin-username "{{ local_account_username }}" \
-      --foreman-initial-admin-password "{{ local_account_password }}" \
-      --foreman-proxy-puppetca true \
-      --foreman-proxy-tftp true \
-      --enable-foreman-plugin-discovery
+      --foreman-initial-admin-password "{{ local_account_password }}"
+#      --foreman-proxy-puppetca true \
+#      --foreman-proxy-tftp true \
+#      --enable-foreman-plugin-discovery
     become: yes
 
   - name: print url for console
