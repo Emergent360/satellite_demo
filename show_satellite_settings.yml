@@ -13,11 +13,10 @@
     register: data
 
   - name: "importing manifest file"
-    ansible.builtin.command:
-      command: >
-        hammer subscription upload
-        --file /data/"{{ manifest_connected_satellite_demo }}"
-        --organization "Emergent"
+    ansible.builtin.command: >
+      hammer subscription upload
+      --file /data/"{{ manifest_connected_satellite_demo }}"
+      --organization "Emergent"
     when: data.stat.exists
     become: yes
 
