@@ -7,8 +7,8 @@
   tasks:
   - name: "Show a setting"
     redhat.satellite.setting_info:
-      username: "admin"
-      password: "changeme"
-      server_url: "https://satellite.example.com"
+      username: "sat_admin"
+      password: "emergent"
+      server_url: "https://ec2-3-208-28-141.compute-1.amazonaws.com"
       name: "http_proxy"
 
