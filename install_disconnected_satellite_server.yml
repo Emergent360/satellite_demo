@@ -109,13 +109,13 @@
 
   - name: "checking for manifest file on /data (satellite media volume)"
     ansible.builtin.stat:
-      path: "/data/{{ manifest_connected_satellite_demo }}"
+      path: "/data/{{ manifest_zip_file }}"
     register: data
 
   - name: "importing manifest file"
     ansible.builtin.command: >
       hammer subscription upload
-      --file /data/"{{ manifest_connected_satellite_demo }}"
+      --file /data/"{{ manifest_zip_file }}"
       --organization "Emergent"
     when: data.stat.exists
     become: yes
