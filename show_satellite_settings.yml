@@ -7,16 +7,7 @@
     manifest_connected_satellite_demo: "manifest_connected_satellite_demo_20211117T143322Z.zip"
 
   tasks:
-  - name: "checking for manifest file on /data (satellite media volume)"
-    ansible.builtin.stat:
-      path: "/data/{{ manifest_connected_satellite_demo }}"
-    register: data
-
-  - name: "importing manifest file"
-    ansible.builtin.command: >
-      hammer subscription upload
-      --file /data/"{{ manifest_connected_satellite_demo }}"
-      --organization "Emergent"
-    when: data.stat.exists
-    become: yes
+  - name: Multiple environment​ variables in a single line ansible task
+      debug:
+        msg: "{{ lookup('env','*') }}"
 
