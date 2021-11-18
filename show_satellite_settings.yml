@@ -2,12 +2,10 @@
 
 - name: "show satellite settings"
   hosts: all
-  gather_facts: no
-  vars:
-    manifest_connected_satellite_demo: "manifest_connected_satellite_demo_20211117T143322Z.zip"
+  gather_facts: yes
 
   tasks:
   - name: Multiple environment​ variables in a single line ansible task
-      debug:
-        msg: "{{ lookup('env','*') }}"
+    debug:
+      msg: "{{ lookup('env','*') }}"
 
