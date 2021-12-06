@@ -38,7 +38,7 @@
     ec2_instance_info:
       region: "{{ ec2_region }}"
       filters:
-        "tag:Name": "*Satellite Server*"
+        "tag:Name": "{{ ec2_name_prefix }} Satellite Server*"
         "tag:Tier": "{{ tier }}"
         instance-state-name: [ "running" ]
     register: instance
