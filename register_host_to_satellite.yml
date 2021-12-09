@@ -1,0 +1,17 @@
+---
+
+- name: "Register host to satellite"
+  hosts: all
+  gather_facts: no
+
+  tasks:
+  - name: get instance info
+    ec2_instance_info:
+      region: "{{ ec2_region }}"
+      filters:
+        "tag:Name": "{{ ec2_name_prefix }} {{ tier }} Satellite Server*"
+        "tag:Tier": "{{ tier }}"
+        instance-state-name: [ "running" ]
+    register: satellite
+    delegate_to: localhost
+
