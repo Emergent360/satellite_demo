@@ -10,5 +10,8 @@
         region: "{{ ec2_region }}"
         filters: 
           "tag:Name": "{{ ec2_name_prefix }} {{ tier }} Satellite Server*"
-      register: ec2_instance_info
+      register: ec2_info
+
+    - debug:
+        var: ec2_info.instances[0].public_ip_address
 
