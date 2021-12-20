@@ -8,6 +8,7 @@
     - name: get server public ip
       amazon.aws.ec2_instance_info:
         region: "{{ ec2_region }}"
-        filters: "tag:Name": "{{ ec2_name_prefix }} {{ tier }} Satellite Server*"
+        filters: 
+          "tag:Name": "{{ ec2_name_prefix }} {{ tier }} Satellite Server*"
       register: ec2_instance_info
 
