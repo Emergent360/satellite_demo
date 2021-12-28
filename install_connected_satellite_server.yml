@@ -81,6 +81,7 @@
 
   - name: run satellite installer
     command: satellite-installer \
+      -s
       --scenario satellite \
       --foreman-initial-organization "Emergent" \
       --foreman-initial-location "Virginia Beach" \
