@@ -3,7 +3,7 @@
   ansible.builtin.command: >
     hammer repository-set list
     --organization "Emergent"
-    --name "{{ item }}"
+    --name "{{ item.set_name }}"
     --enabled true
   register: list
   changed_when: no
@@ -13,7 +13,7 @@
   ansible.builtin.command: >
     hammer repository-set enable
     --organization "Emergent"
-    --name "{{ item }}"
+    --name "{{ item.set_name }}"
     --releasever "8"
   when: "'Red Hat' not in list.stdout"
   become: yes

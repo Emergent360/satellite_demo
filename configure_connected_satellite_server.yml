@@ -5,9 +5,12 @@
   gather_facts: no
   vars:
     content_repos:
-      - "Red Hat Enterprise Linux 8 for x86_64 - AppStream (RPMs)"
-      - "Red Hat Enterprise Linux 8 for x86_64 - BaseOS (RPMs)"
-      - "Red Hat Satellite Tools 6.10 for RHEL 8 x86_64 (RPMs)"
+      - set_name: "Red Hat Enterprise Linux 8 for x86_64 - AppStream (RPMs)"
+        synch_name: "Red Hat Enterprise Linux 8 for x86_64 - AppStream RPMs 8"
+      - set_name: "Red Hat Enterprise Linux 8 for x86_64 - BaseOS (RPMs)"
+        synch_name: "Red Hat Enterprise Linux 8 for x86_64 - BaseOS RPMs 8"
+      - set_name: "Red Hat Satellite Tools 6.10 for RHEL 8 x86_64 (RPMs)"
+        synch_name: "Red Hat Satellite Tools 6.10 for RHEL 8 x86_64 RPMs"
 
   tasks:
   - name: "checking for manifest file on /data (satellite media volume)"
@@ -41,7 +44,7 @@
     ansible.builtin.command: >
       hammer repository synchronize
       --product "Red Hat Enterprise Linux for x86_64"
-      --name "{{ item }}"
+      --name "{{ item.synch_name }}"
       --organization "Emergent"
       --async
     loop: "{{ content_repos }}"
