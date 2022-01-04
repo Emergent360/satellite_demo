@@ -54,6 +54,7 @@
       --async
     loop: "{{ content_repos }}"
     become: yes
+    when: false
 
   - name: "create lifecycle environments"
     ansible.builtin.command: >
