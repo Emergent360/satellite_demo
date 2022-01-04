@@ -61,7 +61,7 @@
     loop: "{{ lifecycle_envs }}"
 
   - name: "create contentview"
-    ansible.builtin.command: >
+    ansible.builtin.shell: >
       hammer repository list |
       grep "{{ product }}" | 
       awk '{printf "%s%s",sep,$1; sep=","} END{print ""}'
