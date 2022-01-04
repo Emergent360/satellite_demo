@@ -18,9 +18,6 @@
           --organization "Emergent"
         register: sub
 
-      - debug:
-          var: sub
-
       - name: "importing manifest file"
         ansible.builtin.command: >
           hammer subscription upload
