@@ -26,5 +26,6 @@
           hammer subscription upload
           --file /data/"{{ manifest_zip_file }}"
           --organization "Emergent"
+        when: "Red Hat Enterprise Linux" not in sub.stdout
     become: yes
     when: data.stat.exists
