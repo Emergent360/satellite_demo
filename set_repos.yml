@@ -4,6 +4,7 @@
     hammer repository-set list
     --organization "Emergent"
     --name "{{ item }}"
+    --enabled true
   register: list
   changed_when: no
   become: yes
