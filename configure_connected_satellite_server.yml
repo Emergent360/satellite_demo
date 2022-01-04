@@ -74,6 +74,7 @@
     ansible.builtin.command: >
       hammer content-view list
     register: cv_list
+    changed_when: false
 
   - name: "create content view"
     ansible.builtin.command: >
