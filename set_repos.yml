@@ -14,5 +14,5 @@
     --organization "Emergent"
     --name "{{ item }}"
     --releasever "8"
-  when: "{{ item }} not in list.stdout"
+  when: "'Red Hat' not in list.stdout"
   become: yes
