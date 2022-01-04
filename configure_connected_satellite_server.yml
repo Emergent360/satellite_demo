@@ -5,6 +5,7 @@
   become: yes
   gather_facts: no
   vars:
+    product: "Red Hat Enterprise Linux for x86_64"
     content_repos:
       - set_name: "Red Hat Enterprise Linux 8 for x86_64 - AppStream (RPMs)"
         synch_name: "Red Hat Enterprise Linux 8 for x86_64 - AppStream RPMs 8"
@@ -58,3 +59,10 @@
   - name: "create lifecycle environments"
     include_tasks: set_lifecycle_envs.yml
     loop: "{{ lifecycle_envs }}"
+
+  - name: "create contentview"
+    ansible.builtin.command: >
+      hammer repository list |
+      grep "$PRODUCT" | 
+      awk '{printf "%s%s",sep,$1; sep=","} END{print ""}'
+    register: rep_list

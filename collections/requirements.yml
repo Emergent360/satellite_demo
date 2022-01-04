@@ -3,4 +3,4 @@ collections:
   - name: amazon.aws
   - name: community.general
   - name: redhat.satellite
-    soure: https://console.redhat.com/api/automation-hub/
+    source: https://console.redhat.com/api/automation-hub/
