@@ -11,7 +11,12 @@
         synch_name: "Red Hat Enterprise Linux 8 for x86_64 - BaseOS RPMs 8"
       - set_name: "Red Hat Satellite Tools 6.10 for RHEL 8 x86_64 (RPMs)"
         synch_name: "Red Hat Satellite Tools 6.10 for RHEL 8 x86_64 RPMs"
-
+    lifecycle_envs:
+      - name: development
+        prior: library
+      - name: production
+        prior: development
+        
   tasks:
   - name: "checking for manifest file on /data (satellite media volume)"
     ansible.builtin.stat:
@@ -49,3 +54,10 @@
       --async
     loop: "{{ content_repos }}"
     become: yes
+
+  - name: "create lifecycle environments"
+    ansiblee.builtin.command: >
+      hammer lifecycle-environment create
+      --name "{{ item.name }}"
+      --prior "{{ item.prior }}"
+    loop: "{{ lifecycle_envs }}"
