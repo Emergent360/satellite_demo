@@ -14,5 +14,5 @@
       --name "{{ item.name }}"
       --prior "{{ item.prior }}"
       --organization "Emergent"
-  when: "{{ item.name }} not in list.stdout"
+  when: "item.name not in list.stdout"
   become: yes
