@@ -1,0 +1,19 @@
+---
+
+- name: "Install connected satellite server"
+  hosts: all
+  gather_facts: no
+    
+  tasks:
+  - name: "checking for manifest file on /data (satellite media volume)"
+    ansible.builtin.stat:
+      path: "/data/{{ manifest_zip_file }}"
+    register: data
+
+  - name: "importing manifest file"
+    ansible.builtin.command: >
+      hammer subscription upload
+      --file /data/"{{ manifest_zip_file }}"
+      --organization "Emergent"
+    when: data.stat.exists
+    become: yes
