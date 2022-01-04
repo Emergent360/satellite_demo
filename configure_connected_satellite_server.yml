@@ -45,3 +45,4 @@
       --organization-label "Emergent"
       --async
     loop: "{{ content_repos }}"
+    become: yes
