@@ -3,7 +3,12 @@
 - name: "Install connected satellite server"
   hosts: all
   gather_facts: no
-    
+  vars:
+    content_repos:
+      - "Red Hat Enterprise Linux 8 for x86_64 - AppStream (RPMs)"
+      - "Red Hat Enterprise Linux 8 for x86_64 - BaseOS (RPMs)"
+      - "Red Hat Satellite Tools 6.9 for RHEL 8 x86_64 (RPMs)"
+
   tasks:
   - name: "checking for manifest file on /data (satellite media volume)"
     ansible.builtin.stat:
@@ -27,3 +32,7 @@
         when: "'Red Hat Enterprise Linux' not in sub.stdout"
     become: yes
     when: data.stat.exists
+
+  - name: "set content repositories"
+    include_tasks: set_repos.yml
+    loop: "{{ content_repos }}"
