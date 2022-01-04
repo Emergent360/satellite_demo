@@ -10,19 +10,21 @@
       path: "/data/{{ manifest_zip_file }}"
     register: data
 
-  - name: "checking for existing subscription upload"
-    ansible.builtin.command: >
-      hammer subscription list
-      --organization "Emergent"
-    register: sub
+  - name: "manage subscription upload"
+    block:
+      - name: "checking for existing subscription upload"
+        ansible.builtin.command: >
+          hammer subscription list
+          --organization "Emergent"
+        register: sub
 
-  - debug:
-      var: sub
+      - debug:
+          var: sub
 
-  - name: "importing manifest file"
-    ansible.builtin.command: >
-      hammer subscription upload
-      --file /data/"{{ manifest_zip_file }}"
-      --organization "Emergent"
-    when: data.stat.exists and not sub
+      - name: "importing manifest file"
+        ansible.builtin.command: >
+          hammer subscription upload
+          --file /data/"{{ manifest_zip_file }}"
+          --organization "Emergent"
     become: yes
+    when: data.stat.exists
