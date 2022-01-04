@@ -13,10 +13,10 @@
       - set_name: "Red Hat Satellite Tools 6.10 for RHEL 8 x86_64 (RPMs)"
         synch_name: "Red Hat Satellite Tools 6.10 for RHEL 8 x86_64 RPMs"
     lifecycle_envs:
-      - name: development
-        prior: library
-      - name: production
-        prior: development
+      - name: Development
+        prior: Library
+      - name: Production
+        prior: Development
 
   tasks:
   - name: "checking for manifest file on /data (satellite media volume)"
