@@ -2,6 +2,7 @@
 
 - name: "Install connected satellite server"
   hosts: all
+  become: yes
   gather_facts: no
   vars:
     content_repos:
@@ -38,7 +39,6 @@
           --file /data/"{{ manifest_zip_file }}"
           --organization "Emergent"
         when: "'Red Hat Enterprise Linux' not in sub.stdout"
-    become: yes
     when: data.stat.exists
 
   - name: "set content repositories"
@@ -53,7 +53,6 @@
       --organization "Emergent"
       --async
     loop: "{{ content_repos }}"
-    become: yes
     when: false
 
   - name: "create lifecycle environments"
