@@ -60,4 +60,5 @@
       hammer lifecycle-environment create
       --name "{{ item.name }}"
       --prior "{{ item.prior }}"
+      --organization "Emergent"
     loop: "{{ lifecycle_envs }}"
