@@ -56,9 +56,5 @@
     when: false
 
   - name: "create lifecycle environments"
-    ansible.builtin.command: >
-      hammer lifecycle-environment create
-      --name "{{ item.name }}"
-      --prior "{{ item.prior }}"
-      --organization "Emergent"
+    include_tasks: set_lifecycle_envs.yml
     loop: "{{ lifecycle_envs }}"

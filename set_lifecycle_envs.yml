@@ -1,0 +1,18 @@
+---
+- name: "checking for existing lifecycle"
+  ansible.builtin.command: >
+    hammer lifecycle-environment list
+    --organization "Emergent"
+    --name "{{ item.name }}"
+  register: list
+  changed_when: no
+  become: yes
+
+- name: "setting lifecycle"
+  ansible.builtin.command: >
+      hammer lifecycle-environment create
+      --name "{{ item.name }}"
+      --prior "{{ item.prior }}"
+      --organization "Emergent"
+  when: "{{ item.name }} not in list.stdout"
+  become: yes
