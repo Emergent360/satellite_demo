@@ -17,6 +17,7 @@
           hammer subscription list
           --organization "Emergent"
         register: sub
+        changed_when: no
 
       - name: "importing manifest file"
         ansible.builtin.command: >
