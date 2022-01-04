@@ -16,7 +16,7 @@
         prior: library
       - name: production
         prior: development
-        
+
   tasks:
   - name: "checking for manifest file on /data (satellite media volume)"
     ansible.builtin.stat:
@@ -56,7 +56,7 @@
     become: yes
 
   - name: "create lifecycle environments"
-    ansiblee.builtin.command: >
+    ansible.builtin.command: >
       hammer lifecycle-environment create
       --name "{{ item.name }}"
       --prior "{{ item.prior }}"
