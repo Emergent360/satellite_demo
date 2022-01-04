@@ -7,6 +7,7 @@
   vars:
     product: "Red Hat Enterprise Linux for x86_64"
     organization: "Emergent"
+    cv_name: "RHEL8"
     content_repos:
       - set_name: "Red Hat Enterprise Linux 8 for x86_64 - AppStream (RPMs)"
         synch_name: "Red Hat Enterprise Linux 8 for x86_64 - AppStream RPMs 8"
@@ -69,9 +70,15 @@
     register: rep_list
     changed_when: false
 
+  - name: "list content views"
+    ansible.builtin.command: >
+      hammer content-view list
+    register: cv_list
+
   - name: "create content view"
     ansible.builtin.command: >
       hammer content-view create
-      --name RHEL8
+      --name "{{ cv_name }}"
       --repository-ids "{{ rep_list.stdout }}"
       --organization "{{ organization }}"
+    when: "cv_name not in cv_list.stdout"
