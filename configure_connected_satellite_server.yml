@@ -60,9 +60,16 @@
     include_tasks: set_lifecycle_envs.yml
     loop: "{{ lifecycle_envs }}"
 
-  - name: "create contentview"
+  - name: "get repo ids"
     ansible.builtin.shell: >
       hammer repository list |
       grep "{{ product }}" | 
       awk '{printf "%s%s",sep,$1; sep=","} END{print ""}'
     register: rep_list
+    changed_when: false
+    
+  - name: "create content view"
+    ansible.builtin.command: >
+      hammer content-view create
+      --name RHEL8
+      --repository-ids "{{ rep_list }}"
