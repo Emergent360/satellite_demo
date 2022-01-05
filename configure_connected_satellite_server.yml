@@ -173,6 +173,6 @@
   - name: "add subscription to activation key"
     ansible.builtin.command: >
       hammer activation-key add-subscription
-      --id "{{ ak_ID | int }}"
-      --subscription-id "{{ sub_ID | int }}"
+      --id "{{ ak_ID.stdout | int }}"
+      --subscription-id "{{ sub_ID.stdout | int }}"
     
