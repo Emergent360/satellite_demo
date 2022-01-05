@@ -100,7 +100,6 @@
     register: cv_ver_list
     changed_when: false
 
-
   - name: "publish content view"
     ansible.builtin.command: >
       hammer content-view publish
@@ -112,6 +111,14 @@
     when: (cv_ID.stdout|length > 0) and 
           (cv_ver_list.stdout|length == 0)
 
+  - name: "get version lifecycle envs"
+    ansible.builtin.shell: >
+      hammer content-view version list |
+      grep "{{ cv_name }}" |
+      awk -F'|' '{print $5}'
+    register: cv_ver_envs
+    changed_when: false
+
   - name: "promote content view"
     ansible.builtin.command: >
       hammer content-view version promote
@@ -120,3 +127,4 @@
       --organization "{{ organization }}"
       --async
     loop: "{{ lifecycle_envs }}"
+    
