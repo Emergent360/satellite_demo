@@ -128,3 +128,11 @@
       --async
     loop: "{{ lifecycle_envs }}"
     when: "item.name not in cv_ver_envs.stdout"
+
+  - name: "list prod activation key"
+    ansible.builtin.shell: >
+      hammer activation-key list \
+      --organization "{{ organization }}" |
+      grep "rhel8_prod" 
+    register: ak_prod
+    changed_when: false
