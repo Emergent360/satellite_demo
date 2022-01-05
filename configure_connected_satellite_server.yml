@@ -94,6 +94,7 @@
 
   - name: "get version list"
     ansible.builtin.shell: >
+      hammer content-view version list |
       grep "{{ cv_name }}" |
       awk -F'|' '{print $3}'
     register: cv_ver_list
