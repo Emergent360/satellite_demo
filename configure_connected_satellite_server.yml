@@ -95,6 +95,6 @@
   - name: "publish content view"
     ansible.builtin.command: >
       hammer content-view publish
-      --id cv_ID
+      --id "{{ cv_ID | int }}""
       --organization "{{ organization }}"
     when: (cv_ID is defined) and (cv_ID|length > 0)
