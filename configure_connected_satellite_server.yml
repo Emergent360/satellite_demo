@@ -127,4 +127,4 @@
       --organization "{{ organization }}"
       --async
     loop: "{{ lifecycle_envs }}"
-    
+    when: "item.name not in cv_ver_envs.stdout"
