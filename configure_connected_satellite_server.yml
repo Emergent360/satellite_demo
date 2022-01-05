@@ -119,4 +119,4 @@
       --to-lifecycle-environment "{{ item.name }}"
       --organization "{{ organization }}"
       --async
-    loop: lifecycle_envs
+    loop: "{{ lifecycle_envs }}"
