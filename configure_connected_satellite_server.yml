@@ -139,6 +139,7 @@
       --organization "{{ organization }}" |
       grep "{{ ak_prod.name }}" 
     register: ak_prod_list
+    failed_when: "ak_prod_list.rc == 2"
     changed_when: false
 
   - name: "create prod activatino key"
