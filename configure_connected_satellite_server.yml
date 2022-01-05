@@ -109,4 +109,4 @@
       --minor 0
       --organization "{{ organization }}"
     when: (cv_ID.stdout|length > 0) and 
-          (cv_ver_list.stdout|length > 0)
+          (cv_ver_list.stdout|length == 0)
