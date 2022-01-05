@@ -89,5 +89,12 @@
       hammer content-view list |
       grep "{{ cv_name }}" |
       awk '{printf "%s%s",sep,$1; sep=","} END{print ""}'
-    register: cv_list
+    register: cv_ID
     changed_when: false
+
+  - name: "publish content view"
+    ansible.builtin.command: >
+      hammer content-view publish
+      --id cv_ID
+      --organization "{{ organization }}"
+    when: (cv_ID is defined) and (cv_ID|length > 0)
