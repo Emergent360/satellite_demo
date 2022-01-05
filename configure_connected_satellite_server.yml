@@ -96,7 +96,7 @@
     ansible.builtin.shell: >
       hammer content-view version list |
       grep "{{ cv_name }}" |
-      awk -F'|' '{print $3}'
+      awk -F'|' '{gsub(" ",""); print $3}'
     register: cv_ver_list
     changed_when: false
 
@@ -108,4 +108,4 @@
       --major 1
       --minor 0
       --organization "{{ organization }}"
-    when: (cv_ID is defined) and (cv_ID|length > 0)
+    when: (cv_ID|length > 0) and (cv_ver_list > 0)
