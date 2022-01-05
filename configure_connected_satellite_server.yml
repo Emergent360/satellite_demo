@@ -92,6 +92,14 @@
     register: cv_ID
     changed_when: false
 
+  - name: "get version list"
+    ansible.builtin.shell: >
+      grep "{{ cv_name }}" |
+      awk -F'|' '{print $3}'
+    register: cv_ver_list
+    changed_when: false
+
+
   - name: "publish content view"
     ansible.builtin.command: >
       hammer content-view publish
