@@ -5,6 +5,7 @@
   become: yes
   gather_facts: no
   vars:
+    sub_name: "Red Hat Enterprise Linux"
     product: "Red Hat Enterprise Linux for x86_64"
     organization: "Emergent"
     cv_name: "RHEL8"
@@ -142,7 +143,7 @@
     failed_when: "ak_prod_list.rc == 2"
     changed_when: false
 
-  - name: "create prod activatino key"
+  - name: "create prod activation key"
     ansible.builtin.command: >
       hammer activation-key create
       --name "{{ ak_prod.name }}"
@@ -150,3 +151,22 @@
       --lifecycle-environment "{{ ak_prod.lc }}"
       --organization "{{ organization }}"
     when: "ak_prod.name not in ak_prod_list.stdout"  
+
+  - name: "get subscription id"
+    ansible.builtin.shell: >
+      hammer subscription list \
+      --organization "{{ organization }}" |
+      grep "{{ sub_name }}" |
+      awk '{printf "%s%s",sep,$1; sep=","} END{print ""}'
+    register: sub_ID
+    changed_when: false
+
+  - name: "get activation key id"
+    ansible.builtin.shell: >
+      hammer activation-key list \
+      --organization "{{ organization }}" |
+      grep "{{ ak_prod.name }}" |
+      awk '{printf "%s%s",sep,$1; sep=","} END{print ""}'
+    register: ak_ID
+    changed_when: false
+
