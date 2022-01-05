@@ -21,9 +21,9 @@
       - name: Production
         prior: Development
     ak_prod:
-      - name: rhel8_prod
-        cv: RHEL8
-        lc: Production
+      name: rhel8_prod
+      cv: RHEL8
+      lc: Production
 
   tasks:
   - name: "checking for manifest file on /data (satellite media volume)"
