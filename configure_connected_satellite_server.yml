@@ -108,5 +108,15 @@
       --major 1
       --minor 0
       --organization "{{ organization }}"
+      --async
     when: (cv_ID.stdout|length > 0) and 
           (cv_ver_list.stdout|length == 0)
+
+  - name: "promote content view"
+    ansible.builtin.command: >
+      hammer content-view version promote
+      --content-view "{{ cv_name }}"
+      --to-lifecycle-environment "{{ item.name }}"
+      --organization "{{ organization }}"
+      --async
+    loop: lifecycle_envs
