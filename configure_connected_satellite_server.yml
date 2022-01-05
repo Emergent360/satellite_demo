@@ -137,7 +137,7 @@
     ansible.builtin.shell: >
       hammer activation-key list \
       --organization "{{ organization }}" |
-      grep "{{ ak_prod }}" 
+      grep "{{ ak_prod.name }}" 
     register: ak_prod_list
     changed_when: false
 
