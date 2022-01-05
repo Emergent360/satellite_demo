@@ -170,3 +170,9 @@
     register: ak_ID
     changed_when: false
 
+  - name: "add subscription to activation key"
+    ansible.builtin.command: >
+      hammer activation-key add-subscription
+      --id "{{ ak_ID }}"
+      --subscription-id "{{ sub_ID }}"
+    
