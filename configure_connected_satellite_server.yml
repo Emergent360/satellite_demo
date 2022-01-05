@@ -83,3 +83,11 @@
       --repository-ids "{{ rep_list.stdout }}"
       --organization "{{ organization }}"
     when: "cv_name not in cv_list.stdout"
+
+  - name: "get content view id"
+    ansible.builtin.shell: >
+      hammer content-view list |
+      grep "{{ cv_name }}" |
+      awk '{printf "%s%s",sep,$1; sep=","} END{print ""}'
+    register: cv_list
+    changed_when: false
