@@ -96,5 +96,7 @@
     ansible.builtin.command: >
       hammer content-view publish
       --id "{{ cv_ID.stdout | int }}"
+      --major 1
+      --minor 0
       --organization "{{ organization }}"
     when: (cv_ID is defined) and (cv_ID|length > 0)
