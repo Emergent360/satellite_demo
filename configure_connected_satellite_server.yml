@@ -20,6 +20,10 @@
         prior: Library
       - name: Production
         prior: Development
+    ak_prod:
+      - name: rhel8_prod
+        cv: RHEL8
+        lc: Production
 
   tasks:
   - name: "checking for manifest file on /data (satellite media volume)"
@@ -133,6 +137,15 @@
     ansible.builtin.shell: >
       hammer activation-key list \
       --organization "{{ organization }}" |
-      grep "rhel8_prod" 
-    register: ak_prod
+      grep "{{ ak_prod }}" 
+    register: ak_prod_list
     changed_when: false
+
+  - name: "create prod activatino key"
+    ansible.builtin.command: >
+      hammer activation-key create
+      --name "{{ ak_prod.name }}"
+      --content-view "{{ ak_prod.cv }}"
+      --lifecycle-environment "{{ ak_prod.lc }}"
+      --organization "{{ organization }}"
+    when: "ak_prod.name not in ak_prod_list.stdout"  
