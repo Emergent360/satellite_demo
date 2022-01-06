@@ -27,28 +27,6 @@
       lc: Production
 
   tasks:
-  - name: "checking for manifest file on /data (satellite media volume)"
-    ansible.builtin.stat:
-      path: "/data/{{ manifest_zip_file }}"
-    register: data
-
-  - name: "manage subscription upload"
-    block:
-      - name: "checking for existing subscription upload"
-        ansible.builtin.command: >
-          hammer subscription list
-          --organization "{{ organization }}"
-        register: sub
-        changed_when: no
-
-      - name: "importing manifest file"
-        ansible.builtin.command: >
-          hammer subscription upload
-          --file /data/"{{ manifest_zip_file }}"
-          --organization "{{ organization }}"
-        when: "'Red Hat Enterprise Linux' not in sub.stdout"
-    when: data.stat.exists
-
   - name: "set content repositories"
     include_tasks: set_repos.yml
     loop: "{{ content_repos }}"
