@@ -39,7 +39,6 @@
       --organization "{{ organization }}"
       --async
     loop: "{{ content_repos }}"
-    when: false
 
   - name: "create lifecycle environments"
     include_tasks: set_lifecycle_envs.yml
