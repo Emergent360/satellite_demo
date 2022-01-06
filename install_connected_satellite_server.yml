@@ -115,6 +115,7 @@
           --organization "{{ organization }}"
         when: "'Red Hat Enterprise Linux' not in sub.stdout"
     when: data.stat.exists
+    become: yes
 
   - name: print url for console
     debug:
