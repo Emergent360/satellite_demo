@@ -3,6 +3,9 @@
 - name: "Install connected satellite server"
   hosts: all
   gather_facts: no
+  vars:
+    organization: "Emergent"
+
     
   tasks:
   - name: remove amazon rhui client
@@ -112,7 +115,7 @@
           --organization "{{ organization }}"
         when: "'Red Hat Enterprise Linux' not in sub.stdout"
     when: data.stat.exists
-    
+
   - name: print url for console
     debug:
       msg: "Access satellite console at https://{{ ec2_public_dns_name }}"
