@@ -1,0 +1,12 @@
+---
+
+- name: "register satellite clients"
+  hosts: all
+  gather_facts: no
+  become: yes
+
+  tasks:
+  - name: "remove rhui"
+    ansible.builtin.yum:
+      name: rh-amazon-rhui-client*
+      state: absent
