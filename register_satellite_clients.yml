@@ -6,6 +6,12 @@
   become: yes
 
   tasks:
+  - name: "get registration command"
+    ansible.builtin.command:
+      hostname
+    register: reg_command
+    delegate_to: "{{ groups['tag_Platform_Satellite'] }}"
+
   - name: "remove rhui"
     ansible.builtin.yum:
       name: rh-amazon-rhui-client*
@@ -17,4 +23,3 @@
       enabled: yes
       state: started
 
-      
