@@ -10,3 +10,11 @@
     ansible.builtin.yum:
       name: rh-amazon-rhui-client*
       state: absent
+
+  - name: "start rhsmcertd"
+    ansible.builtin.systemd:
+      name: rhsmcertd
+      enabled: yes
+      state: started
+
+      
