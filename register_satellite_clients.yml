@@ -14,7 +14,7 @@
 
   - name: "print command"
     debug:
-      reg_command
+      var: reg_command
 
 - name: "register satellite clients"
   hosts: tag_Platform_RHEL
