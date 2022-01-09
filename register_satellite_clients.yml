@@ -41,14 +41,14 @@
 
   - name: "enable satellite tools repo"
     ansible.builtin.command: >
-    subscription-manager repos
-    --enable="satellite-tools-\*-rpms"
+      subscription-manager repos
+      --enable="satellite-tools-\*-rpms"
 
   - name: "subscription-manager refresh"
     ansible.builtin.command: >
-    subscription-manager refresh
+      subscription-manager refresh
 
   - name: "subscription-manager refresh"
     ansible.builtin.command: >
-    subscription-manager facts
-    --update
+      subscription-manager facts
+      --update
