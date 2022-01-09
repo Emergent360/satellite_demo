@@ -1,10 +1,8 @@
 ---
-
-- name: "register satellite clients"
-  hosts: all
+- name: "get"
+  hosts: tag_Platform_Satellite
   gather_facts: no
   become: yes
-
   tasks:
   - name: "get registration command"
     ansible.builtin.command:
@@ -13,6 +11,13 @@
     register: reg_command
     loop: "{{ groups['tag_Platform_Satellite'] }}"
 
+
+- name: "register satellite clients"
+  hosts: all
+  gather_facts: no
+  become: yes
+
+  tasks:
   - name: "remove rhui"
     ansible.builtin.yum:
       name: rh-amazon-rhui-client*
