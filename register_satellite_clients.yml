@@ -3,14 +3,18 @@
   hosts: tag_Platform_Satellite
   gather_facts: no
   become: yes
+  vars:
+
+
   tasks:
   - name: "get registration command"
     ansible.builtin.command:
       hostname
-    delegate_to: "{{ item }}"
     register: reg_command
-    loop: "{{ groups['tag_Platform_Satellite'] }}"
 
+  - name: "print command"
+    debug:
+      reg_command
 
 - name: "register satellite clients"
   hosts: tag_Platform_RHEL
