@@ -10,7 +10,7 @@
   - name: "get registration command"
     ansible.builtin.command: >
       hammer host-registration generate-command
-      -–insecure yes 
+      --insecure yes 
       --activation-key rhel8_prod 
       --organization Emergent 
       --location "Virginia Beach" -
