@@ -42,6 +42,11 @@
       awk -F': ' '{print $2}'
     register: sub_status
 
+  - name: "run host registration command"
+    ansible.builtin.command: >
+      "{{ reg_command.stdout }}"
+    when: '"Current" in sub_status.stdout'
+
   - name: "enable satellite tools repo"
     ansible.builtin.command: >
       subscription-manager repos
