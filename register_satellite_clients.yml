@@ -48,8 +48,8 @@
     register: sub_status
 
   - name: "run host registration command"
-    ansible.builtin.shell: >
-      $("{{ hostvars[groups['tag_Platform_Satellite'][0]]['reg_command'] }}")
+    ansible.builtin.shell:
+      "{{ hostvars[groups['tag_Platform_Satellite'][0]]['reg_command'] }}"
     register: run_reg
     when: '"Current" not in sub_status.stdout'
 
