@@ -5,7 +5,6 @@
   become: yes
   vars:
 
-
   tasks:
   - name: "get registration command"
     ansible.builtin.command: >
@@ -27,6 +26,9 @@
   become: yes
 
   tasks:
+  - debug: var=group[tag_Platform_Satellite][0]
+    when: group[tag_Platform_Satellite][0] is defined
+    
   - name: "remove rhui"
     ansible.builtin.yum:
       name: rh-amazon-rhui-client*
