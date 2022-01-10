@@ -18,10 +18,6 @@
       --update-packages no
     register: reg_command
 
-  - name: "print command"
-    debug:
-      var: reg_command
-
 - name: "register satellite clients"
   hosts: tag_Platform_RHEL
   gather_facts: no
@@ -39,10 +35,18 @@
       enabled: yes
       state: started
 
+  - name: "check registration status"
+    ansible.builtin.shell: >
+      subscription-manager status |
+      grep "Overall Status:" |
+      awk -F': ' '{print $2}'
+    register: sub_status
+
   - name: "enable satellite tools repo"
     ansible.builtin.command: >
       subscription-manager repos
       --enable="satellite-tools-\*-rpms"
+    when: "Current not in sub_status.stdout"
 
   - name: "subscription-manager refresh"
     ansible.builtin.command: >
