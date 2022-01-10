@@ -45,21 +45,22 @@
   - name: "run host registration command"
     ansible.builtin.command: >
       "{{ reg_command.stdout }}"
+    register: run_reg
     when: '"Current" in sub_status.stdout'
 
   - name: "enable satellite tools repo"
     ansible.builtin.command: >
       subscription-manager repos
       --enable="satellite-tools-\*-rpms"
-    when: '"Current" in sub_status.stdout'
+    when: run_reg is not failed
 
   - name: "subscription-manager refresh"
     ansible.builtin.command: >
       subscription-manager refresh
-    when: '"Current" in sub_status.stdout'
+    when: run_reg is not failed
 
   - name: "subscription-manager refresh"
     ansible.builtin.command: >
       subscription-manager facts
       --update
-    when: '"Current" in sub_status.stdout'
+    when: run_reg is not failed
