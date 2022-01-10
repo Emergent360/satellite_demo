@@ -16,7 +16,10 @@
       --location "Virginia Beach"
       --lifecycle-environment "Production" 
       --update-packages no
-    register: reg_command
+    register: gen_command
+
+  - name: "save reg command"
+    set_fact: reg_command="{{ gen_command.stdout }}"
 
 - name: "register satellite clients"
   hosts: tag_Platform_RHEL
@@ -44,7 +47,7 @@
 
   - name: "run host registration command"
     ansible.builtin.command: >
-      "{{ reg_command.stdout }}"
+      "{{ reg_command }}"
     register: run_reg
     when: '"Current" not in sub_status.stdout'
 
