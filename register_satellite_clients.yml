@@ -46,7 +46,7 @@
     ansible.builtin.command: >
       "{{ reg_command.stdout }}"
     register: run_reg
-    when: '"Current" in sub_status.stdout'
+    when: '"Current" not in sub_status.stdout'
 
   - name: "enable satellite tools repo"
     ansible.builtin.command: >
