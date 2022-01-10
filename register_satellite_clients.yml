@@ -51,8 +51,10 @@
   - name: "subscription-manager refresh"
     ansible.builtin.command: >
       subscription-manager refresh
+    when: '"Current" in sub_status.stdout'
 
   - name: "subscription-manager refresh"
     ansible.builtin.command: >
       subscription-manager facts
       --update
+    when: '"Current" in sub_status.stdout'
