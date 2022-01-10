@@ -26,7 +26,7 @@
   become: yes
 
   tasks:
-  - debug: var=group[tag_Platform_Satellite][0]
+  - debug: var=group[tag_Platform_Satellite]
     when: groups['tag_Platform_Satellite'][0] is defined
 
   - name: "remove rhui"
