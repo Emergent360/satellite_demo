@@ -53,19 +53,26 @@
     register: run_reg
     when: '"Current" not in sub_status.stdout'
 
+  - name: "check registration status"
+    ansible.builtin.shell: >
+      subscription-manager status |
+      grep "Overall Status:" |
+      awk -F': ' '{print $2}'
+    register: sub_status
+
   - name: "enable satellite tools repo"
     ansible.builtin.command: >
       subscription-manager repos
       --enable="satellite-tools-\*-rpms"
-    when: run_reg is not failed
+    when: '"Current" in sub_status.stdout'
 
   - name: "subscription-manager refresh"
     ansible.builtin.command: >
       subscription-manager refresh
-    when: run_reg is not failed
+    when: '"Current" in sub_status.stdout'
 
   - name: "subscription-manager refresh"
     ansible.builtin.command: >
       subscription-manager facts
       --update
-    when: run_reg is not failed
+    when: '"Current" in sub_status.stdout'
