@@ -46,7 +46,7 @@
     ansible.builtin.command: >
       subscription-manager repos
       --enable="satellite-tools-\*-rpms"
-    when: "Current in sub_status.stdout"
+    when: "Current" in sub_status.stdout
 
   - name: "subscription-manager refresh"
     ansible.builtin.command: >
