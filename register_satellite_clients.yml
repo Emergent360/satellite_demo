@@ -77,7 +77,7 @@
       subscription-manager refresh
     when: '"Current" in sub_status.stdout'
 
-  - name: "subscription-manager refresh"
+  - name: "subscription-manager update facts"
     ansible.builtin.command: >
       subscription-manager facts
       --update
