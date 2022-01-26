@@ -1,6 +1,6 @@
 ---
 - name: "get registration command"
-  hosts: all
+  hosts: tag_Platform_Satellite
   gather_facts: no
   become: yes
   vars:
@@ -22,7 +22,6 @@
       --lifecycle-environment "{{ lc_names[lc_env] }}" 
       --update-packages no
     register: gen_command
-    delegate_to: groups['tag_Platform_Satellite'][0]
 
   - name: "save reg command"
     set_fact: reg_command="{{ gen_command.stdout }}"
