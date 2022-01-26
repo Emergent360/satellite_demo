@@ -27,7 +27,7 @@
     set_fact: reg_command="{{ gen_command.stdout }}"
 
 - name: "register satellite clients"
-  hosts: tag_Platform_RHEL
+  hosts: "tag_tag_LC_ENV_{{ lc_env }}"
   gather_facts: no
   become: yes
 
