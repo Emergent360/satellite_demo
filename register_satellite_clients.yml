@@ -6,9 +6,9 @@
   vars:
     stages:
       dev:
-        lc_name: Development
-        ak: rhel8_dev
-    stage: dev
+        lc_name: "Development"
+        ak: "rhel8_dev"
+    stage: "dev"
   
 
 
@@ -20,7 +20,7 @@
       --activation-key "{{ stages.stage.ak }}"
       --organization Emergent 
       --location "Virginia Beach"
-      --lifecycle-environment "{{ stages.stage.lc_name }}" 
+      --lifecycle-environment "{{ stages[stage].lc_name }}" 
       --update-packages no
     register: gen_command
 
