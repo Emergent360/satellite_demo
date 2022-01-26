@@ -19,7 +19,7 @@
 
   - name: Remove the amazon rhui client
     ansible.builtin.dnf:
-      name: "remove rh-amazon-rhui-client*"
+      name: "rh-amazon-rhui-client*"
       state: absent
 
   - name: Start and enable rhsmcertd
