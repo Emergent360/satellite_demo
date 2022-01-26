@@ -1,19 +1,26 @@
 ---
-- name: "get"
+- name: "get registration command"
   hosts: tag_Platform_Satellite
   gather_facts: no
   become: yes
   vars:
+    stages:
+      dev:
+        lc_name: Development
+        ak: rhel8_dev
+    stage: dev
+  
+
 
   tasks:
   - name: "get registration command"
     ansible.builtin.command: >
       hammer host-registration generate-command
       --insecure yes 
-      --activation-key rhel8_prod 
+      --activation-key "{{ stages.stage.ak }}"
       --organization Emergent 
       --location "Virginia Beach"
-      --lifecycle-environment "Production" 
+      --lifecycle-environment "{{ stages.stage.lc_name }}" 
       --update-packages no
     register: gen_command
 
