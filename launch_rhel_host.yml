@@ -16,3 +16,14 @@
     loop: "{{ ec2.results }}"
     loop_control:
       label: "{{ item['tagged_instances'][0]['private_ip'] }}"
+
+  - name: Remove the amazon rhui client
+    ansible.builtin.dnf:
+      name: "remove rh-amazon-rhui-client*"
+      state: absent
+
+  - name: Start and enable rhsmcertd
+    ansible.builtin.systemd:
+      name: rhsmcertd
+      state: started
+      enabled: yes
