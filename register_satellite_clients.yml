@@ -69,7 +69,7 @@
   - name: "enable satellite tools repo"
     ansible.builtin.command: >
       subscription-manager repos
-      --enable="satellite-tools-\*-rpms"
+      --enable="satellite-tools-*-rpms"
     when: '"Current" in sub_status.stdout'
 
   - name: "subscription-manager refresh"
