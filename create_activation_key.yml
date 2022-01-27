@@ -1,0 +1,43 @@
+---
+- name: "list prod activation key"
+  ansible.builtin.shell: >
+    hammer activation-key list \
+    --organization "{{ organization }}" |
+    grep "{{ ak_prod.name }}" 
+  register: ak_prod_list
+  failed_when: "ak_prod_list.rc == 2"
+  changed_when: false
+
+- name: "create prod activation key"
+  ansible.builtin.command: >
+    hammer activation-key create
+    --name "{{ ak_prod.name }}"
+    --content-view "{{ ak_prod.cv }}"
+    --lifecycle-environment "{{ ak_prod.lc }}"
+    --organization "{{ organization }}"
+  when: "ak_prod.name not in ak_prod_list.stdout"  
+
+- name: "get subscription id"
+  ansible.builtin.shell: >
+    hammer subscription list \
+    --organization "{{ organization }}" |
+    grep "{{ sub_name }}" |
+    awk '{printf "%s%s",sep,$1; sep=","} END{print ""}'
+  register: sub_ID
+  changed_when: false
+
+- name: "get activation key id"
+  ansible.builtin.shell: >
+    hammer activation-key list \
+    --organization "{{ organization }}" |
+    grep "{{ ak_prod.name }}" |
+    awk '{printf "%s%s",sep,$1; sep=","} END{print ""}'
+  register: ak_ID
+  changed_when: false
+
+- name: "add subscription to activation key"
+  ansible.builtin.command: >
+    hammer activation-key add-subscription
+    --id "{{ ak_ID.stdout }}"
+    --subscription-id "{{ sub_ID.stdout }}"
+  

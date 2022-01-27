@@ -8,7 +8,7 @@
     sub_name: "Red Hat Enterprise Linux"
     product: "Red Hat Enterprise Linux for x86_64"
     organization: "Emergent"
-    cv_name: "RHEL8"
+    cv_name: "cv_rhel8_base"
     content_repos:
       - set_name: "Red Hat Enterprise Linux 8 for x86_64 - AppStream (RPMs)"
         synch_name: "Red Hat Enterprise Linux 8 for x86_64 - AppStream RPMs 8"
@@ -19,8 +19,10 @@
     lifecycle_envs:
       - name: Development
         prior: Library
-      - name: Production
+      - name: Testing
         prior: Development
+      - name: Production
+        prior: Testing
     ak_prod:
       name: rhel8_prod
       cv: RHEL8
@@ -44,112 +46,3 @@
     include_tasks: set_lifecycle_envs.yml
     loop: "{{ lifecycle_envs }}"
 
-  - name: "get repo ids"
-    ansible.builtin.shell: >
-      hammer repository list |
-      grep "{{ product }}" | 
-      awk '{printf "%s%s",sep,$1; sep=","} END{print ""}'
-    register: rep_list
-    changed_when: false
-
-  - name: "list content views"
-    ansible.builtin.command: >
-      hammer content-view list
-    register: cv_list
-    changed_when: false
-
-  - name: "create content view"
-    ansible.builtin.command: >
-      hammer content-view create
-      --name "{{ cv_name }}"
-      --repository-ids "{{ rep_list.stdout }}"
-      --organization "{{ organization }}"
-    when: "cv_name not in cv_list.stdout"
-
-  - name: "get content view id"
-    ansible.builtin.shell: >
-      hammer content-view list |
-      grep "{{ cv_name }}" |
-      awk '{printf "%s%s",sep,$1; sep=","} END{print ""}'
-    register: cv_ID
-    changed_when: false
-
-  - name: "get version list"
-    ansible.builtin.shell: >
-      hammer content-view version list |
-      grep "{{ cv_name }}" |
-      awk -F'|' '{gsub(" ",""); print $3}'
-    register: cv_ver_list
-    changed_when: false
-
-  - name: "publish content view"
-    ansible.builtin.command: >
-      hammer content-view publish
-      --id "{{ cv_ID.stdout | int }}"
-      --major 1
-      --minor 0
-      --organization "{{ organization }}"
-      --async
-    when: (cv_ID.stdout|length > 0) and 
-          (cv_ver_list.stdout|length == 0)
-
-  - name: "get version lifecycle envs"
-    ansible.builtin.shell: >
-      hammer content-view version list |
-      grep "{{ cv_name }}" |
-      awk -F'|' '{print $5}'
-    register: cv_ver_envs
-    changed_when: false
-
-  - name: "promote content view"
-    ansible.builtin.command: >
-      hammer content-view version promote
-      --content-view "{{ cv_name }}"
-      --to-lifecycle-environment "{{ item.name }}"
-      --organization "{{ organization }}"
-      --async
-    loop: "{{ lifecycle_envs }}"
-    when: "item.name not in cv_ver_envs.stdout"
-
-  - name: "list prod activation key"
-    ansible.builtin.shell: >
-      hammer activation-key list \
-      --organization "{{ organization }}" |
-      grep "{{ ak_prod.name }}" 
-    register: ak_prod_list
-    failed_when: "ak_prod_list.rc == 2"
-    changed_when: false
-
-  - name: "create prod activation key"
-    ansible.builtin.command: >
-      hammer activation-key create
-      --name "{{ ak_prod.name }}"
-      --content-view "{{ ak_prod.cv }}"
-      --lifecycle-environment "{{ ak_prod.lc }}"
-      --organization "{{ organization }}"
-    when: "ak_prod.name not in ak_prod_list.stdout"  
-
-  - name: "get subscription id"
-    ansible.builtin.shell: >
-      hammer subscription list \
-      --organization "{{ organization }}" |
-      grep "{{ sub_name }}" |
-      awk '{printf "%s%s",sep,$1; sep=","} END{print ""}'
-    register: sub_ID
-    changed_when: false
-
-  - name: "get activation key id"
-    ansible.builtin.shell: >
-      hammer activation-key list \
-      --organization "{{ organization }}" |
-      grep "{{ ak_prod.name }}" |
-      awk '{printf "%s%s",sep,$1; sep=","} END{print ""}'
-    register: ak_ID
-    changed_when: false
-
-  - name: "add subscription to activation key"
-    ansible.builtin.command: >
-      hammer activation-key add-subscription
-      --id "{{ ak_ID.stdout }}"
-      --subscription-id "{{ sub_ID.stdout }}"
-    
