@@ -4,9 +4,6 @@
   hosts: localhost
   gather_facts: no
     
-  roles:
-  - launch_ami
-
   tasks:
   - name: launch ami
     include_role:
