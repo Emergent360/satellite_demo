@@ -8,6 +8,10 @@
   - launch_ami
 
   tasks:
+  - name: launch ami
+    include_role:
+      name: launch_ami
+
   - name: "Wait for connection on all hosts."
     wait_for:
       host: "{{ item['tagged_instances'][0]['private_ip'] }}"
