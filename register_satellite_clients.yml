@@ -21,6 +21,7 @@
       --location "Virginia Beach"
       --lifecycle-environment "{{ lc_names[lc_env] }}" 
       --update-packages no
+      --force
     register: gen_command
 
   - name: "save reg command"
