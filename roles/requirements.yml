@@ -1,5 +1,5 @@
 ---
-#- src: https://github.com/Emergent360/launch_ami.git
+- src: https://github.com/Emergent360/launch_ami.git
 - src: https://github.com/Emergent360/launch_ec2_instance.git
 - src: https://github.com/Emergent360/register_rhel_subscription.git
 - src: https://github.com/Emergent360/deregister_rhel_subscription.git
