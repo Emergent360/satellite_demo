@@ -2,7 +2,6 @@
 - name: "check repo synch status"
   ansible.builtin.command: >
     hammer product list 
-    --product "Red Hat Enterprise Linux for x86_64"
     --name "{{ item.synch_name }}"
     --organization "{{ organization }}"
   register: synch_status
