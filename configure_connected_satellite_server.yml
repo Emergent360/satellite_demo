@@ -53,3 +53,6 @@
     include_tasks: set_lifecycle_envs.yml
     loop: "{{ lifecycle_envs }}"
 
+  - name "create content view"
+    include_tasks: create_content_view
+    
