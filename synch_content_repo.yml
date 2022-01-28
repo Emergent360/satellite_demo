@@ -3,6 +3,8 @@
   ansible.builtin.command: >
     hammer product list 
     --organization "{{ organization }}"
+    --name "Red Hat Enterprise Linux for x86_64"
+    --fields "Sync state"
   register: synch_status
 
 - debug:
