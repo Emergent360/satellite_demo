@@ -1,5 +1,5 @@
 ---
-- name: "checking for existing repo set"
+- name: "checking for existing repo set {{ item.set_name }}"
   ansible.builtin.command: >
     hammer repository-set list
     --organization "Emergent"
@@ -9,7 +9,7 @@
   changed_when: no
   become: yes
 
-- name: "setting repo"
+- name: "setting repo {{ item.set_name }}"
   ansible.builtin.command: >
     hammer repository-set enable
     --organization "Emergent"
