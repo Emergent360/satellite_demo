@@ -1,0 +1,21 @@
+---
+- name: "check repo synch status"
+  ansible.builtin.command: >
+    hammer repository info
+    --name "{{ item.synch_name }}"
+    --organization "{{ organization }}"
+    --fields "Synch/status"
+  register: synch_status
+
+- debug:
+    var: synch_status
+
+- name: "synch content repositories"
+  ansible.builtin.command: >
+    hammer repository synchronize
+    --product "Red Hat Enterprise Linux for x86_64"
+    --name "{{ item.synch_name }}"
+    --organization "{{ organization }}"
+    --async
+  when: "'Red Hat' not in list.stdout"
+  become: yes
