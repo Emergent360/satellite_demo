@@ -1,5 +1,5 @@
 ---
-- name: "checking for existing lifecycle"
+- name: "checking for existing lifecycle {{ item.name }}"
   ansible.builtin.command: >
     hammer lifecycle-environment list
     --organization "Emergent"
@@ -8,7 +8,7 @@
   changed_when: no
   become: yes
 
-- name: "setting lifecycle"
+- name: "setting lifecycle {{ item.name }}"
   ansible.builtin.command: >
       hammer lifecycle-environment create
       --name "{{ item.name }}"
