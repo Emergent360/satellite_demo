@@ -34,7 +34,7 @@
     loop: "{{ content_repos }}"
 
   - name: "synch content repositories"
-    include_tasks: synch_content_repos.yml
+    include_tasks: synch_content_repo.yml
     loop: "{{ content_repos }}"
 
   - name: "create lifecycle environments"
