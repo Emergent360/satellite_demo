@@ -17,4 +17,5 @@
     --name "{{ item.synch_name }}"
     --organization "{{ organization }}"
     --async
+  when: "'Running' not in synch_status.stdout"
   become: yes
