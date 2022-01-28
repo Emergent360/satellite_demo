@@ -33,9 +33,21 @@
     include_tasks: set_repos.yml
     loop: "{{ content_repos }}"
 
+  - name: "check repo synch status"
+    ansible.builtin.command: >
+      hammer product list 
+      --organization "{{ organization }}"
+      --name "Red Hat Enterprise Linux for x86_64"
+      --fields "Sync state"
+    register: synch_status
+
+  - debug:
+      var: synch_status.stdout
+
   - name: "synch content repositories"
     include_tasks: synch_content_repo.yml
     loop: "{{ content_repos }}"
+    when: "'Running' not in synch_status.stdout"
 
   - name: "create lifecycle environments"
     include_tasks: set_lifecycle_envs.yml
