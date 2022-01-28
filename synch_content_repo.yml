@@ -1,15 +1,14 @@
 ---
 - name: "check repo synch status"
   ansible.builtin.command: >
-    hammer repository info
+    hammer product list 
     --product "Red Hat Enterprise Linux for x86_64"
     --name "{{ item.synch_name }}"
     --organization "{{ organization }}"
-    --fields "Sync/status"
   register: synch_status
 
 - debug:
-    var: synch_status
+    var: synch_status.stdout
 
 - name: "synch content repositories"
   ansible.builtin.command: >
