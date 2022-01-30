@@ -32,6 +32,7 @@
         content_type: "rpm"
         inclusion_type: "true"
         original_packages: "true"
+        package_name: "*"
     second_filter:
       - name: "Errata up to 2019-11-05"
         content_type: "erratum"
