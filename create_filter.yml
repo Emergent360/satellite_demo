@@ -9,6 +9,7 @@
     --inclusion "{{ item.inclusion_type }}"
     --organization "{{ organization }}"
     --repositories "{{ filter_repos }}"
+    --product "{{ product }}"
     --original-packages "{{ item.original_packages }}"
 
 - name: "create filter rule"
