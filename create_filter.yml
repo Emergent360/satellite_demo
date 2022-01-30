@@ -1,0 +1,25 @@
+---
+- name: "create filter"
+  ansible.builtin.command: >
+    hammer content-view filter create
+    --name: "{{ item.name }}"
+    --type: "{{ item.content_type }}"
+    --content-view: "{{ cv_name }}"
+    --descriptoin: "{{ item.name }}"
+    --inclusion: "{{ item.inclusion_type }}"
+    --organization: "{{ organization }}"
+    --repositories: "{{ filter_repos }}"
+    --original-packages: "{{ item.original_packages }}"
+
+- name: "create filter rule"
+  ansible.builtin.command: >
+    hammer content-view filter rule create
+    --content-view: "{{ cv_name }}"
+    --content-view-filter "{{ item.name }}"
+    --date-type "{{ item.date_type }}"
+    --end-date: "{{ item.end_date }}"
+
+
+
+
+

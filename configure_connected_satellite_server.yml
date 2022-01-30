@@ -27,6 +27,26 @@
       name: rhel8_prod
       cv: RHEL8
       lc: Production
+    first_filter:
+        name: "all packages without errata"
+        content_type: "package"
+        inclusion_type: "true"
+        original_packages: "true"
+    second_filter:
+      - name: "Errata up to 2019-11-05"
+        content_type: "erratum"
+        inclusion_type: "true"
+        original_packages: "false"
+        date_type: "issued"
+        end_date: "2019-11-05"
+    third_filter:
+      - name: "Errata up to 2020-04-28"
+        content_type: "erratum"
+        inclusion_type: "true"
+        original_packages: "false"
+        date_type: "issued"
+        end_date: "2020-04-28"
+    filter_repos: "Red Hat Enterprise Linux 8 for x86_64 - AppStream (RPMs),Red Hat Enterprise Linux 8 for x86_64 - BaseOS (RPMs)"
 
   tasks:
   - name: "set content repositories"
@@ -55,3 +75,7 @@
 
   - name: "create content view"
     include_tasks: create_content_view.yml
+
+  - name: "create first filter"
+    include_tasks: create_filter.yml
+    loop: "{{ first_filter }}"
