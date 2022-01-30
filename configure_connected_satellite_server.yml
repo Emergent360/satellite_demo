@@ -28,7 +28,7 @@
       cv: RHEL8
       lc: Production
     first_filter:
-        name: "all packages without errata"
+      - name: "all packages without errata"
         content_type: "package"
         inclusion_type: "true"
         original_packages: "true"
@@ -78,4 +78,4 @@
 
   - name: "create first filter"
     include_tasks: create_filter.yml
-    loop: "{{ first_filter, wantlist=True }}"
+    loop: "{{ first_filter }}"
