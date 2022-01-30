@@ -78,4 +78,4 @@
 
   - name: "create first filter"
     include_tasks: create_filter.yml
-    loop: "{{ first_filter }}"
+    loop: "{{ first_filter, wantlist=True }}"
