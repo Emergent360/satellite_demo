@@ -29,7 +29,7 @@
       lc: Production
     first_filter:
       - name: "all packages without errata"
-        content_type: "package"
+        content_type: "rpm"
         inclusion_type: "true"
         original_packages: "true"
     second_filter:
