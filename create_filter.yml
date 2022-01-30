@@ -17,8 +17,8 @@
     hammer content-view filter rule create
     --content-view "{{ cv_name }}"
     --content-view-filter "{{ item.name }}"
-    --date-type "{{ item.date_type }}"
-    --end-date "{{ item.end_date }}"
+    --date-type "{{ item.date_type | default(omit) }}"
+    --end-date "{{ item.end_date | default(omit) }}"
 
 
 
