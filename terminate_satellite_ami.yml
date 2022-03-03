@@ -3,6 +3,9 @@
 - name: "Terminate satellite AMIs"
   hosts: localhost
   gather_facts: no
+  vars:
+    ec2_region: us-east-1
+    platform: Satellite
 
   roles:
   - terminate_ami

@@ -3,6 +3,9 @@
 - name: "Terminate RHEL AMIs"
   hosts: localhost
   gather_facts: no
+  vars:
+    ec2_region: us-east-1
+    platform: RHEL
 
   roles:
   - terminate_ami
