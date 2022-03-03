@@ -3,9 +3,6 @@
 - name: "Deregister satellite subscription"
   hosts: all
   gather_facts: no
-  vars:
-    ec2_region: us-east-1
-    platform: Satellite
     
   roles:
   - deregister_rhel_subscription
