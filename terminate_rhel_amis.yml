@@ -1,0 +1,8 @@
+---
+
+- name: "Terminate RHEL AMIs"
+  hosts: localhost
+  gather_facts: no
+
+  roles:
+  - terminate_ami
