@@ -74,6 +74,6 @@
   - name: "create content view"
     include_tasks: create_content_view.yml
 
-  - name: "create first filter"
-    include_tasks: create_filter.yml
-    loop: "{{ first_filter }}"
+#  - name: "create first filter"
+#    include_tasks: create_filter.yml
+#    loop: "{{ first_filter }}"
