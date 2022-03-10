@@ -5,6 +5,7 @@
   gather_facts: no
   vars:
     organization: "Emergent"
+    manifest_zip_file: "manifest_connected_satellite_demo.zip"
 
     
   tasks:
