@@ -118,6 +118,12 @@
     when: data.stat.exists
     become: yes
 
+  - name: "Upload scap content"
+    ansible.builtin.command: >
+      hammer scap-content bulk-upload 
+      --type default
+    become: yes
+
   - name: print url for console
     debug:
       msg: "Access satellite console at https://{{ ec2_public_dns_name }}"
