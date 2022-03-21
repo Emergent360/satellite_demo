@@ -8,6 +8,7 @@
       "dev": "Development"
       "test" : "Testing"
       "prod" : "Production"
+      "scap" : "Library"
 
 
   tasks:
