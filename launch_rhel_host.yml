@@ -9,12 +9,21 @@
     include_role:
       name: launch_ami
 
+#  - name: "Wait for connection on all hosts."
+#    wait_for:
+#      host: "{{ item['tagged_instances'][0]['private_ip'] }}"
+#      port: 22
+#      timeout: 500
+#    loop: "{{ ec2.results }}"
+#    loop_control:
+#      label: "{{ item['tagged_instances'][0]['private_ip'] }}"
+
   - name: "Wait for connection on all hosts."
     wait_for:
-      host: "{{ item['tagged_instances'][0]['private_ip'] }}"
+      host: "{{ item['private_dns_name'] }}"
       port: 22
       timeout: 500
-    loop: "{{ ec2.results }}"
+    loop: "{{ ec2.results[0].instances }}"
     loop_control:
-      label: "{{ item['tagged_instances'][0]['private_ip'] }}"
-
+      label: "{{ item['private_dns_name'] }}"
+    when: ec2.results[0].instances is defined
