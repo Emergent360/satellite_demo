@@ -61,6 +61,11 @@
     register: run_reg
     when: '"Current" not in sub_status.stdout'
 
+  - name: register insights client
+    ansible.builtin.command: >
+      insights-client --register --display-name 
+      "{{ hostvars[inventory_hostname]['ec2_tag_Name'] | replace(' ', '_') }}"
+
   - name: "check registration status"
     ansible.builtin.shell: >
       subscription-manager status |
