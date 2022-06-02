@@ -48,6 +48,10 @@
       enabled: yes
       state: started
 
+  - name: set repos to managed
+    command: subscription-manager config --rhsm.manage_repos=1
+    become: yes
+
   - name: "check registration status"
     ansible.builtin.shell: >
       subscription-manager status |
