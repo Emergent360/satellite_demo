@@ -9,3 +9,4 @@
       server_url: "{{ sat_url }}"
       username: "sat-admin"
       password: "emergent"
+      validate_certs: no
