@@ -1,0 +1,11 @@
+---
+- name: "Check Status"
+  hosts: localhost
+  gather_facts: no
+
+
+- name: status
+  redhat.satellite.status_info:
+    server_url: "{{ sat_url }}"
+    username: "sat-admin"
+    password: "emergent"
