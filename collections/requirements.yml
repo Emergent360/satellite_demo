@@ -2,4 +2,4 @@ collections:
   - name: ansible.posix
   - name: amazon.aws
   - name: community.general
-  - name: redhat.satellite
+#  - name: redhat.satellite
