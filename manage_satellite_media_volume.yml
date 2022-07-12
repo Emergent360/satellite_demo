@@ -35,7 +35,7 @@
     delegate_to: localhost
 
   - name: get instance info
-    ec2_instance_info:
+    amazon.aws.ec2_instance_info:
       region: "{{ ec2_region }}"
       filters:
         "tag:Name": "{{ ec2_name_prefix }} {{ tier }} Satellite Server*"
