@@ -167,6 +167,16 @@
       --type default
     become: yes
 
+  - name: "Install insights"
+    ansible.builtin.command: >
+      satellite-maintain packages install insights-client    
+    become: yes
+
+  - name: "Register with insights"
+    ansible.builtin.command: >
+      satellite-installer --register-with-insights
+    become: yes
+
   - name: print url for console
     debug:
       msg: "Access satellite console at https://{{ public_dns_name }}"
