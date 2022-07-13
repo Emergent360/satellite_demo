@@ -55,6 +55,6 @@
     become: yes
     ansible.posix.mount:
       path: /data
-      src: /dev/nvme1n1
+      src: /dev/xvdf
       state: mounted
       fstype: xfs
