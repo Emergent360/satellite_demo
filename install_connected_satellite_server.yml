@@ -6,6 +6,7 @@
   vars:
     organization: "Emergent"
     manifest_zip_file: "manifest_connected_satellite_demo.zip"
+    ec2_region: us-east-1
 
     
   tasks:
