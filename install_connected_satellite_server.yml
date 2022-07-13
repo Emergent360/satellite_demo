@@ -82,7 +82,7 @@
   - name: Update stage tag to registered
     ec2_tag:
       region: "{{ ec2_region }}"
-      resource: "{{ hostvars[inventory_hostname]['ec2_id'] }}"
+      resource: "{{ hostvars[inventory_hostname]['instance_id'] }}"
       state: present
       tags:
         Stage: "registered"
