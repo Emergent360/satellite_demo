@@ -15,11 +15,38 @@
       warn: false
     become: yes
 
+  - name: clean all
+    command: yum clean all
+    args:
+      warn: false
+    become: yes
+    
   - name: clear repo config
     command: rm -rf /etc/yum.repos.d/*
     args:
       warn: false
     become: yes
+
+  - name: "start rhsmcertd"
+    ansible.builtin.systemd:
+      name: rhsmcertd
+      enabled: yes
+      state: started
+    become: yes
+
+  - name: set repos to managed
+    ansible.builtin.command: >
+      subscription-manager config 
+      --rhsm.manage_repos=1
+    become: yes  
+
+  - name: "check registration status"
+    ansible.builtin.shell: >
+      subscription-manager status |
+      grep "Overall Status:" |
+      awk -F': ' '{print $2}'
+    register: sub_status
+    become: yes  
 
   - name: copy product-id.conf
     copy:
@@ -28,17 +55,29 @@
     become: yes
     
   - name: Register RHEL instance subscription
-    redhat_subscription:
-      state: present
-      activationkey: "{{ rh_activationkey }}"
-      org_id: "{{ rh_org_id }}"
-      auto_attach: true
-      pool_ids: "{{ pool_ids | default(omit) }}"
+    ansible.builtin.command: >
+      subscription-manager register
+      --activationkey "{{ rh_activationkey }}"
+      --org "{{ rh_org_id }}"
+      --name Satellite_Server
+      --force
     become: yes
     register: reg_sub
     until: reg_sub is not failed
     retries: 5
+  
+  - name: register insights client
+    ansible.builtin.command: >
+      insights-client 
+      --register 
+    become: yes  
 
+  - name: register insights client
+    ansible.builtin.command: >
+      insights-client 
+      --display-name "{{ system_name }}"
+    become: yes  
+  
   - name: Update stage tag to registered
     ec2_tag:
       region: "{{ ec2_region }}"
