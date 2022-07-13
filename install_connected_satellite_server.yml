@@ -169,4 +169,4 @@
 
   - name: print url for console
     debug:
-      msg: "Access satellite console at https://{{ ec2_public_dns_name }}"
+      msg: "Access satellite console at https://{{ public_dns_name }}"
