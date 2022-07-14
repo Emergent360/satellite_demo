@@ -68,7 +68,7 @@
   - name: register insights client
     ansible.builtin.command: >
       insights-client --register --display-name 
-      "{{ hostvars[inventory_hostname]['ec2_tag_Name'] | replace(' ', '_') }}"
+      "{{ hostvars[inventory_hostname]['tags']['Name'] | replace(' ', '_') }}"
 
   - name: "check registration status"
     ansible.builtin.shell: >
