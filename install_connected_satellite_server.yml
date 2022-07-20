@@ -72,6 +72,7 @@
       name: insights-client
       state: latest
     when: rhel_version == "7"
+    become: yes
 
   - name: register insights client
     ansible.builtin.command: >
