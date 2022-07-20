@@ -67,6 +67,12 @@
     until: reg_sub is not failed
     retries: 5
   
+  - name: install insights client
+    yum:
+      name: insights-client
+      state: latest
+    when: rhel_version = 7
+    
   - name: register insights client
     ansible.builtin.command: >
       insights-client 
