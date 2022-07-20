@@ -71,8 +71,8 @@
     yum:
       name: insights-client
       state: latest
-    when: rhel_version = 7
-    
+    when: rhel_version == 7
+
   - name: register insights client
     ansible.builtin.command: >
       insights-client 
@@ -121,7 +121,7 @@
       --enable=satellite-6.11-for-rhel-8-x86_64-rpms \
       --enable=satellite-maintenance-6.11-for-rhel-8-x86_64-rpms
     become: yes
-    when: rhel_version = 8
+    when: rhel_version == 8
 
   - name: set repolist
     command: subscription-manager repos \
@@ -131,12 +131,12 @@
       --enable=rhel-server-rhscl-7-rpms \
       --enable=rhel-7-server-ansible-2.9-rpms
     become: yes
-    when: rhel_version = 7
+    when: rhel_version == 7
 
   - name: enable satellite module
     command: dnf -y module enable satellite:el8
     become: yes
-    when: rhel_version = 8
+    when: rhel_version == 8
 
   - name: install satellite rpm
     yum:
