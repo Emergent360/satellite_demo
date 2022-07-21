@@ -188,7 +188,7 @@
 
   - name: "Install insights"
     ansible.builtin.command: >
-      satellite-maintain packages install insights-client    
+      satellite-maintain packages install -y insights-client    
     become: yes
 
   - name: "Register with insights"
